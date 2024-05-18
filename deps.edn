@@ -1,0 +1,16 @@
+{:deps
+ {com.github.steffan-westcott/clj-otel-api {:mvn/version "0.2.6"}
+  com.fzakaria/slf4j-timbre                {:mvn/version "0.4.1"}
+  com.taoensso/timbre                      {:mvn/version "6.5.0"}
+  org.slf4j/jcl-over-slf4j                 {:mvn/version "2.0.13"}
+  org.slf4j/jul-to-slf4j                   {:mvn/version "2.0.13"}
+  org.slf4j/log4j-over-slf4j               {:mvn/version "2.0.13"}
+  org.slf4j/osgi-over-slf4j                {:mvn/version "2.0.13"}
+  ring/ring-jetty-adapter                  {:mvn/version "1.12.1"}}
+ :aliases
+ {:run
+  {:main-opts ["-m" "user"]
+   :jvm-opts  ["-javaagent:opentelemetry-javaagent-2.4.0.jar"
+               ;; With this property and the Timbre config in `-main`
+               ;; clj-otel cannot see agent-generated spans:
+               "-Dotel.javaagent.logging=application"]}}}
