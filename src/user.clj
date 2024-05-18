@@ -1,5 +1,6 @@
 (ns user
  (:require
+  [clojure.string :as str]
   [ring.adapter.jetty :as jetty]
   [steffan-westcott.clj-otel.api.trace.span :as span]
   [steffan-westcott.clj-otel.context :as context]
@@ -12,8 +13,9 @@
    (println "IN SPAN" (context/current))))
 
 (defn- otel-context-middleware
- [data]
- (span/get-span-context)
+ [{:keys [?ns-str] :as data}]
+ (when-not (str/starts-with? ?ns-str "io.opentelemetry.javaagent.")
+   (span/get-span-context))
  data)
 
 (defn -main
